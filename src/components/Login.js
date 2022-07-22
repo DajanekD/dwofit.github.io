@@ -11,15 +11,6 @@ const Login = () => {
 
         <div className='login'>
         <h1>User Login</h1>
-        <Formik>
-            initialValues={
-                {
-                    email: "",
-                    password: ""
-                }
-            }
-            onSubmit 
-        </Formik>
         <label>Username</label>
         <input type='text' />
         <label>Password</label>

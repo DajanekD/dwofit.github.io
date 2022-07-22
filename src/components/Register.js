@@ -1,17 +1,10 @@
 import React, { useState } from 'react'
-import axios from 'axios';
 import Navbar from '../components/Navbar'
 import FitImage from './FitImage'
 import './RegisterS.css'
 
 
-const Register = () => {
-    const InitialValues = { username: "", email: "", password: "" }
-    const [formValues, setFormValues] = useState(InitialValues)
-
-    const handleChange = (e) => {
-        console.log(e.target);
-    }
+const Register = () => { 
   return (
     <div>
         <Navbar />
