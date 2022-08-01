@@ -7,10 +7,12 @@ import Login from './components/Login'
 
 
 import Home from './routes/Home'
+import { AuthContextProvider } from './context/AuthContext'
 
 function App() {
   return (
     <>
+    <AuthContextProvider>
       <Routes>
         <Route path= '/' element={<Home />} />
         <Route path= '/contact' element={<Contact />} />
@@ -19,6 +21,7 @@ function App() {
         <Route path= '/login' element={<Login />} />
 
       </Routes>
+    </AuthContextProvider>
     </>
   );
 }

@@ -1,49 +1,33 @@
-import axios from 'axios'
 import React from 'react'
 import { useState } from 'react'
-import {useNavigate } from 'react-router-dom'
+import { UserAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 import Navbar from '../components/Navbar'
 import FitImage from './FitImage'
 import './RegisterS.css'
 
 
 const Register = () => { 
-  let history =useNavigate();
-  const [data, setData]=useState({
-    user_name:"",
-    email:"",
-    password:""
-  })
 
-  const handleChange=(e)=> {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
-   // console.log(data)
 
-  }
+  const {createUser} = UserAuth();
 
-  const submitForm=(e)=>{
-    e.preventDefault();
-   const sendData = {
-      user_name:data.user_name,
-      email:data.email,
-      password:data.password
+
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    setError('');
+    try{
+        await createUser(email, password);
+    }catch (e) {
+      setError(e.message);
+      console.log(e.message);
     }
+  } ;
 
-    console.log(sendData);
-
-    axios.post('http://localhost/dwofitness.github.io/register-login/insert.php', sendData)
-    .then((result)=> {
-      if(result.data.Status == 'Invalid'){
-      alert('Invalid User');
-      }
-      else{
-
-        history('/Login')
-
-      }
-    })
-  }
 
 
   return (
@@ -53,13 +37,14 @@ const Register = () => {
 
     <div className='registration'>
         <h1>User Registration</h1>
-      <form onSubmit={submitForm}>
+        <p className='py-2'>Already have an account? <Link to='/login' className='underline' >Log In</Link></p>
+      <form onSubmit={handleSubmit}>
         <label>Username</label>
-        <input type='text' name='user_name' placeholder= 'username' onChange={handleChange} value={data.user_name}/>
+        <input type='text' name='user_name' placeholder= 'username' />
         <label>Email</label>
-        <input type='text' name='email' placeholder='email' onChange={handleChange} value={data.email}/>
+        <input type='email' name='email' placeholder='email' onChange={(e) => setEmail(e.target.value)}/>
         <label>Password</label>
-        <input type='text' name= 'password' placeholder='password'  onChange={handleChange} value={data.password}/>
+        <input type='password' name= 'password' placeholder='password' onChange={(e) => setPassword(e.target.value)} />
         <button className='btn'>Register</button>
       </form>
     </div>
